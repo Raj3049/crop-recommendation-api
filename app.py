@@ -1,6 +1,11 @@
 from flask import Flask, request, jsonify
 import numpy as np
 import pickle
+import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyAevZ1zarPQnwCaMwgktZSJkqVZODYnbzo")
+model_ai = genai.GenerativeModel("gemini-2.5-flash")
+
 
 # Initialize Flask
 app = Flask(__name__)
@@ -38,6 +43,30 @@ def predict():
         return jsonify({
             "success": True,
             "recommended_crop": result
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        })
+    
+@app.route('/advisory', methods=['POST'])
+def advisory():
+
+    try:
+
+        data = request.json
+        question = data["question"]
+
+        prompt = f"You are an agriculture expert. Give simple farming advice in 3 to 5 points. Question: {question}"
+
+        response = model_ai.generate_content(prompt)
+
+        return jsonify({
+            "success": True,
+            "advice": response.text
         })
 
     except Exception as e:
