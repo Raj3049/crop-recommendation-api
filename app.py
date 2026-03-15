@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyAevZ1zarPQnwCaMwgktZSJkqVZODYnbzo")
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model_ai = genai.GenerativeModel("gemini-2.5-flash")
 
 
