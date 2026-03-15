@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import numpy as np
 import pickle
 import google.generativeai as genai
+import os
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model_ai = genai.GenerativeModel("gemini-2.5-flash")
